@@ -6,6 +6,7 @@
 var snake;
 var snakeLength;
 var snakeSize;
+var snakeDirection;
 
 var food;
 
@@ -21,11 +22,11 @@ var screenHeight;
 gameInitialize();
 snakeInitialize();
 foodInitialize();
-setInterval(gameLoop, 1000/30
+setInterval(gameLoop, 1000/30);
 
-/*------------------------------------------------------------------------------
+/*-------------------------------------------------------------------------------------
  * Game Functions
- * -----------------------------------------------------------------------------
+ * -------------------------------------------------------------------------------------
  */
 
 function gameInitialize() {
@@ -36,7 +37,7 @@ function gameInitialize() {
     screenHeight = window.innerHeight;
     
     canvas.width = screenWidth;
-    canvas.height = screenHeight; 
+    canvas.height = screenHeight;
 }
 
 function gameLoop() {
@@ -52,7 +53,7 @@ function gameDraw() {
 }
 
 /*---------------------------------------------------------------------------------
- * SAnake Functions
+ * Snake Functions
  * -------------------------------------------------------------------------------
  */
 
@@ -60,6 +61,7 @@ function snakeInitialize() {
     snake = [];
     snakeLength = 5;
     snakeSize = 20;
+    snakeDirection = "right";
     
     for(var index = snakeLength - 1; index >= 0; index--) {
         snake.push( {
@@ -80,7 +82,12 @@ function snakeUpdate() {
     var snakeHeadX = snake[0].x;
     var snakeHeadY = snake[0].y;
     
-    snakeHeadX++;
+    if(snakeDirection == "down") {
+        snakeHeadY++;
+    }
+    else {
+        snakeHeadX++;
+    }
     
     var snakeTail = snake.pop();
     snakeTail.x = snakeHeadX;
@@ -98,6 +105,7 @@ function foodInitialize() {
         x: 0,
         y: 0
     };
+    setFoodPosition();
 }
 
 function foodDraw() {
@@ -107,5 +115,8 @@ function foodDraw() {
 
 function setFoodPosition() {
     var randomX = Math.floor(Math.random() * screenWidth);
-    var randomY = math.floor(Math.random() * screenHeight);
+    var randomY = Math.floor(Math.random() * screenHeight);
+    
+    food.x = randomX;
+    food.y = randomY;
 }
